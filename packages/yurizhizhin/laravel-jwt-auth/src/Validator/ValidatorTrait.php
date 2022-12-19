@@ -5,6 +5,7 @@ namespace Yurizhizhin\LaravelJwtAuth\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PHPOpenSourceSaver\JWTAuth\JWT;
+use Exception;
 
 /**
  * @class ValidatorTrait
@@ -32,13 +33,16 @@ trait ValidatorTrait
     /**
      * Валидация токена
      *
-     * @return bool
+     * @return void
+     * @throws Exception
      */
-    public function validateToken(): bool
+    public function validateToken(): void
     {
         /** @var JWTValidator $validator */
         $validator = App::make(JWT::class);
 
-        return $validator->validateToken($this->authToken);
+        if (!$validator->validateToken($this->authToken)) {
+            throw new Exception('Given access token is invalid');
+        }
     }
 }
