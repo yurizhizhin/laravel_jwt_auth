@@ -2,7 +2,7 @@
 
 namespace Yurizhizhin\LaravelJwtAuth\DataHandlers\RBAC;
 
-use Yurizhizhin\LaravelJwtAuth\Models\DataHandlers\AbstractDataHandler;
+use Yurizhizhin\LaravelJwtAuth\DataHandlers\AbstractDataHandler;
 use Yurizhizhin\LaravelJwtAuth\Models\Dto\RBAC\ModelHasRolesDto;
 use Yurizhizhin\LaravelJwtAuth\Models\Dto\RBAC\RoleHasPermissionsDto;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Yurizhizhin\LaravelJwtAuth\Models\DataHandlers;
+namespace Yurizhizhin\LaravelJwtAuth\DataHandlers;
 
 use Yurizhizhin\LaravelJwtAuth\Models\Eloquent\DataSourceInterface;
 
