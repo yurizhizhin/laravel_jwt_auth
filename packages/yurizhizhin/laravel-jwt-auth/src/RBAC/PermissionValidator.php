@@ -4,7 +4,7 @@ namespace Yurizhizhin\LaravelJwtAuth\RBAC;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Yurizhizhin\LaravelJwtAuth\Models\DataHandlers\RBAC\RBACDataHandler;
+use Yurizhizhin\LaravelJwtAuth\DataHandlers\RBAC\RBACDataHandler;
 use Yurizhizhin\LaravelJwtAuth\Models\Eloquent\ModelHasRoles;
 
 /**

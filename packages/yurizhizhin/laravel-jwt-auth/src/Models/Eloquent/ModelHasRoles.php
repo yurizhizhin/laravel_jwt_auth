@@ -2,7 +2,7 @@
 
 namespace Yurizhizhin\LaravelJwtAuth\Models\Eloquent;
 
-use Yurizhizhin\LaravelJwtAuth\Models\DataHandlers\RBAC\RBACDataHandlerInterface;
+use Yurizhizhin\LaravelJwtAuth\DataHandlers\RBAC\RBACDataHandlerInterface;
 use Yurizhizhin\LaravelJwtAuth\Models\Dto\RBAC\ModelHasRolesDto;
 use Yurizhizhin\LaravelJwtAuth\Models\Dto\RBAC\RolesDto;
 use Illuminate\Database\Eloquent\Model;

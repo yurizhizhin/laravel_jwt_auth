@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Yurizhizhin\LaravelJwtAuth\Models\DataHandlers\RBAC;
+namespace Yurizhizhin\LaravelJwtAuth\DataHandlers\RBAC;
 
 use Yurizhizhin\LaravelJwtAuth\Models\Dto\RBAC\ModelHasRolesDto;
 
