@@ -4,8 +4,7 @@ namespace Yurizhizhin\LaravelJwtAuth\Validator;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use PHPOpenSourceSaver\JWTAuth\JWT;
-use Exception;
+use Yurizhizhin\LaravelJwtAuth\Exceptions\InvalidTokenProvidedException;
 
 /**
  * @class ValidatorTrait
@@ -19,30 +18,25 @@ trait ValidatorTrait
     public string|bool $authToken;
 
     /**
+     * Валидация токена
+     *
      * @param Request $request
+     * @return bool
+     * @throws InvalidTokenProvidedException
      */
-    public function __construct(Request $request)
+    public function checkAuthToken(Request $request): bool
     {
         $this->authToken = $request->server->get('HTTP_AUTHORIZATION', false);
 
-        if (is_string($this->authToken)) {
-            $this->authToken = str_replace('Bearer ', '', $this->authToken);
+        if (!is_string($this->authToken)) {
+            throw new InvalidTokenProvidedException();
         }
-    }
 
-    /**
-     * Валидация токена
-     *
-     * @return void
-     * @throws Exception
-     */
-    public function validateToken(): void
-    {
+        $this->authToken = str_replace('Bearer ', '', $this->authToken);
+
         /** @var JWTValidator $validator */
-        $validator = App::make(JWT::class);
+        $validator = App::make(JWTValidator::class);
 
-        if (!$validator->validateToken($this->authToken)) {
-            throw new Exception('Given access token is invalid');
-        }
+        return $validator->validateToken($this->authToken);
     }
 }
