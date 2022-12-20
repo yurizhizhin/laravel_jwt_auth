@@ -5,6 +5,9 @@ namespace Yurizhizhin\LaravelJwtAuth\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Yurizhizhin\LaravelJwtAuth\Exceptions\InvalidTokenProvidedException;
+use Yurizhizhin\LaravelJwtAuth\Exceptions\NotPermittedException;
+use Yurizhizhin\LaravelJwtAuth\Helpers\JWTHelper;
+use Yurizhizhin\LaravelJwtAuth\RBAC\PermissionValidator;
 
 /**
  * @class ValidatorTrait
@@ -21,10 +24,11 @@ trait ValidatorTrait
      * Валидация токена
      *
      * @param Request $request
+     * @param string $permission
      * @return bool
-     * @throws InvalidTokenProvidedException
+     * @throws InvalidTokenProvidedException|NotPermittedException
      */
-    public function checkAuthToken(Request $request): bool
+    public function checkAuthToken(Request $request, string $permission): bool
     {
         $this->authToken = $request->server->get('HTTP_AUTHORIZATION', false);
 
@@ -37,6 +41,16 @@ trait ValidatorTrait
         /** @var JWTValidator $validator */
         $validator = App::make(JWTValidator::class);
 
-        return $validator->validateToken($this->authToken);
+        /** @var PermissionValidator $permissionValidator */
+        $permissionValidator = App::make(PermissionValidator::class);
+
+        /** @var JWTHelper $jwtHelper */
+        $jwtHelper = App::make(JWTHelper::class, [
+            'jwtData' => $this->authToken
+        ]);
+
+        $userID = (int)$jwtHelper->getPayLoadData('sub');
+
+        return $validator->validateToken($this->authToken) && $permissionValidator->getHasPermission($permission, $userID);
     }
 }

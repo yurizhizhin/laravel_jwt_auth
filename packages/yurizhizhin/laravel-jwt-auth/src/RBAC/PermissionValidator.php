@@ -3,8 +3,8 @@
 namespace Yurizhizhin\LaravelJwtAuth\RBAC;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Yurizhizhin\LaravelJwtAuth\DataHandlers\RBAC\RBACDataHandler;
+use Yurizhizhin\LaravelJwtAuth\Exceptions\NotPermittedException;
 use Yurizhizhin\LaravelJwtAuth\Models\Eloquent\ModelHasRoles;
 
 /**
@@ -26,11 +26,16 @@ class PermissionValidator
     /**
      * @param string $permission
      * @return bool
+     * @throws NotPermittedException
      */
-    public function getHasPermission(string $permission): bool
+    public function getHasPermission(string $permission, int $userID): bool
     {
-        $roles = $this->dataHandler->getModelRoles(Auth::id(), true);
+        $roles = $this->dataHandler->getModelRoles($userID, true);
 
-        return in_array($permission, $this->dataHandler->getPermissions($roles));
+        if (!in_array($permission, $this->dataHandler->getPermissions($roles))) {
+            throw new NotPermittedException();
+        }
+
+        return true;
     }
 }
