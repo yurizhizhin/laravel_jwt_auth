@@ -25,6 +25,7 @@ class PermissionValidator
 
     /**
      * @param string $permission
+     * @param int $userID
      * @return bool
      * @throws NotPermittedException
      */
